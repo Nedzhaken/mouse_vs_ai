@@ -26,7 +26,22 @@ def main():
     exe = os.path.join(env_path,"LinuxHeadless.x86_64")
     
     # Prepare the Unity log filename
-    log_fn = f"{args.log_name}_test.txt"
+    # log_fn = f"{args.log_name}_test.txt"
+
+    logs_dir = "./logfiles"
+    base_name = f"{args.log_name}_test"
+    ext = ".txt"
+    log_fn = base_name + ext
+    summary_path = os.path.join(logs_dir,log_fn)
+
+    counter = 1
+    while os.path.exists(summary_path):
+        log_fn = f"{base_name}_{counter}{ext}"
+        counter += 1
+        summary_path = os.path.join(logs_dir,log_fn)
+    print(summary_path)
+    print(log_fn)
+
 
 
     sa = os.path.join(env_path,
@@ -47,8 +62,8 @@ def main():
     subprocess.run(cmd, check=True)
 
     # Now summarize
-    logs_dir = "./logfiles"
-    summary_path = os.path.join(logs_dir,log_fn)
+    # logs_dir = "./logfiles"
+    # summary_path = os.path.join(logs_dir,log_fn)
 
     print(f"\n=== Evaluation Summary ({log_fn}) ===")
     summarize_log(str(summary_path))
